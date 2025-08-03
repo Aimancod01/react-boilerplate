@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Lato", sans-serif;
+  --font-opensans: "Open Sans", sans-serif;
+}
+
+@theme {
+  --color-primary: #51111d;
+  --color-secondary: hsl(218, 28%, 13%);
+  --color-darkBlue: hsl(216, 53%, 9%);
+  --color-darkBlue2: hsl(219, 30%, 18%);
+  --color-lightRed: hsl(0, 100%, 63%);
+}
