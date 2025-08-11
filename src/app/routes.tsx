@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../components/layouts/dashboard";
+import { ProtectedRoute } from "../lib/auth";
 
 const convert = (m: {
   default: ComponentType;
@@ -25,9 +26,9 @@ export const createAppRouter = () =>
     {
       path: "/dashboard",
       element: (
-        // <ProtectedRoute>
-        <DashboardLayout />
-        // </ProtectedRoute>
+        <ProtectedRoute>
+          <DashboardLayout />
+        </ProtectedRoute>
       ),
       children: [
         {
