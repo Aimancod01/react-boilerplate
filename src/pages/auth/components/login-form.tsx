@@ -3,8 +3,9 @@ import Input from "../../../components/ui/form/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../../../components/layouts/auth";
-import { loginSchema } from "../../../schemas";
+import { loginSchema, type TLoginSchema } from "../../../schemas";
 import { useAuthStore } from "../../../store/auth-store";
+import Button from "../../../components/ui/button";
 
 const LoginForm = () => {
   const { login } = useAuthStore();
@@ -13,7 +14,7 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  async function onSubmit(data: { email: string; password: string }) {
+  async function onSubmit(data: TLoginSchema) {
     const userData = {
       id: "1",
       name: "Aiman",
@@ -42,12 +43,14 @@ const LoginForm = () => {
           error={formState.errors["password"]}
           registration={register("password")}
         />
-        <button
+        <Button
+          title="Login"
+          variant="primary"
+          className="w-full"
+          size="md"
+          onClick={() => console.log("clicked")}
           type="submit"
-          className="w-full py-3 px-4 bg-primary text-white font-semibold rounded-xl shadow-md transition-all duration-200"
-        >
-          Sign In
-        </button>
+        />
       </form>
 
       <p className="text-sm text-gray-500 text-center mt-5">

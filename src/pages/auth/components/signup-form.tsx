@@ -3,14 +3,16 @@ import Input from "../../../components/ui/form/input";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { signUpSchema } from "../../../schemas";
+import { signUpSchema, type TSignUpSchema } from "../../../schemas";
+import Select from "../../../components/ui/form/select";
+import Button from "../../../components/ui/button";
 
 const SignUpForm = () => {
   const { register, formState, handleSubmit } = useForm({
     resolver: zodResolver(signUpSchema),
   });
 
-  async function onSubmit(data: { email: string; password: string }) {
+  async function onSubmit(data: TSignUpSchema) {
     console.log(data);
   }
   return (
@@ -35,12 +37,25 @@ const SignUpForm = () => {
           error={formState.errors["confirmPassword"]}
           registration={register("confirmPassword")}
         />
-        <button
+        <Select
+          label="Select Role"
+          options={[
+            { label: "Admin", value: "admin" },
+            { label: "User", value: "user" },
+            { label: "Manager", value: "manager" },
+            { label: "Guest", value: "guest" },
+          ]}
+          defaultValue="user"
+          registration={register("role")}
+        />
+        <Button
+          title="Sign up"
+          variant="primary"
+          className="w-full"
+          size="md"
+          onClick={() => console.log("clicked")}
           type="submit"
-          className="w-full py-3 px-4 bg-primary text-white font-semibold rounded-xl shadow-md transition-all duration-200"
-        >
-          Sign Up
-        </button>
+        />
       </form>
 
       <p className="text-sm text-gray-500 text-center mt-5">
