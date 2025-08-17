@@ -39,6 +39,10 @@ export const createAppRouter = () =>
           path: "/dashboard/settings",
           lazy: () => import("../pages/dashboard/settings").then(convert),
         },
+        {
+          path: "/dashboard/user",
+          lazy: () => import("../pages/dashboard/user").then(convert),
+        },
       ],
     },
     {
