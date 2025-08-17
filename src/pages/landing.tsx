@@ -8,12 +8,13 @@ const Landing: FC = () => {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 flex items-center justify-between  px-6 py-4 shadow-md bg-white">
+      <header className="sticky top-0 flex items-center justify-between px-6 py-4 shadow-md bg-white">
         <h1 className="text-2xl font-bold text-primary">MyApp</h1>
         <nav className="space-x-2">
           {isAuthenticated ? (
             <Button
               title="Dashboard"
+              className="w-20"
               variant="primary"
               size="sm"
               onClick={() => navigate("/dashboard")}
@@ -23,6 +24,7 @@ const Landing: FC = () => {
             <Button
               title="Login"
               variant="primary"
+              className="w-20"
               size="sm"
               onClick={() => navigate("/login")}
               type="submit"

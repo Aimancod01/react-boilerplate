@@ -29,16 +29,15 @@ const Select: FC<SelectFieldProps> = ({
     <FieldWrapper label={label} error={error}>
       <select
         id={registration?.name}
-        className={cn("mt-1 border w-full p-2 rounded outline-none", className)}
+        className={cn(
+          "mt-1 border border-gray-300 w-full h-11 px-2 rounded-lg outline-none",
+          className
+        )}
         defaultValue={defaultValue}
         {...registration}
       >
         {options.map(({ label, value }) => (
-          <option
-            key={label?.toString()}
-            value={value}
-            className="bg-white text-gray-700 hover:bg-blue-100"
-          >
+          <option key={label?.toString()} value={value}>
             {label}
           </option>
         ))}
