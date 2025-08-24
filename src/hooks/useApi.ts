@@ -1,4 +1,8 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  type UseMutationOptions,
+} from "@tanstack/react-query";
 import axiosInstance from "../lib/api-client";
 
 export const useFetch = (
@@ -17,9 +21,13 @@ export const useFetch = (
   });
 };
 
-export const usePost = (url: string, options = {}) => {
-  return useMutation({
-    mutationFn: (data) => axiosInstance.post(url, data).then((res) => res.data),
+export const usePost = <TData = unknown, TVariables = unknown>(
+  url: string,
+  options?: UseMutationOptions<TData, Error, TVariables>
+) => {
+  return useMutation<TData, Error, TVariables>({
+    mutationFn: (data: TVariables) =>
+      axiosInstance.post<TData>(url, data).then((res) => res.data),
     ...options,
   });
 };

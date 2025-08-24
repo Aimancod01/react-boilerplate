@@ -48,12 +48,12 @@ const Button: FC<ButtonProps> = ({
       {loading ? (
         <Spinner size="sm" />
       ) : (
-        icon && <span className="mr-2">{icon}</span>
+        <>
+          {icon && <span className="mr-2">{icon}</span>}
+          {title && <span>{title}</span>}
+          {rightIcon && <span className="ml-2">{rightIcon}</span>}
+        </>
       )}
-
-      {title && <span>{title}</span>}
-
-      {rightIcon && <span className="ml-2">{rightIcon}</span>}
     </button>
   );
 };

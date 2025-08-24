@@ -1,33 +1,32 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const handleApiError = (error: unknown) => {
   if (axios.isAxiosError(error) && error.response) {
     const { status, data } = error.response;
-
     switch (status) {
       case 400:
-        console.error("Bad Request:", data?.message);
+        toast.error(data?.message || "Bad Request");
         break;
       case 401:
-        console.error("Unauthorized:", data?.message);
+        toast.error(data?.message || "Unauthorized - Please login again");
+        localStorage.removeItem("token");
+        window.location.href = "/login";
         break;
       case 403:
-        console.error("Forbidden:", data?.message);
+        toast.error(data?.message || "Forbidden");
         break;
       case 404:
-        console.error("Not Found:", data?.message);
+        toast.error(data?.message || "Not Found");
         break;
       case 500:
-        console.error(
-          "Server Error:",
-          data?.message || "Internal Server Error"
-        );
+        toast.error(data?.message || "Internal Server Error");
         break;
       default:
-        console.error("Unknown Error:", data?.message || error.message);
+        toast.error(data?.message || error.message || "Unknown Error");
     }
   } else {
     const err = error as Error;
-    console.error("Network Error:", err.message);
+    toast.error(err.message || "Network Error");
   }
 };

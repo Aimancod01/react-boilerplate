@@ -6,6 +6,7 @@ import AuthLayout from "../../../components/layouts/auth";
 import { loginSchema, type TLoginSchema } from "../../../schemas";
 import { useAuthStore } from "../../../store/auth-store";
 import Button from "../../../components/ui/button";
+import { useLogin } from "../../../services/auth-service";
 
 const LoginForm = () => {
   const { login } = useAuthStore();
@@ -14,17 +15,20 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  const { mutate, isPending } = useLogin({
+    onSuccess: (data) => {
+      login(data.payload.user);
+      localStorage.setItem("token", data.payload.accessToken);
+      navigate("/dashboard");
+      reset();
+    },
+  });
+
   async function onSubmit(data: TLoginSchema) {
-    const userData = {
-      id: "1",
-      name: "Aiman",
+    mutate({
       email: data.email,
-      role: "User",
-      token: "eiuiq0092nx",
-    };
-    login(userData);
-    navigate("/dashboard");
-    reset();
+      password: data.password,
+    });
   }
 
   return (
@@ -48,6 +52,7 @@ const LoginForm = () => {
           variant="primary"
           className="w-full"
           size="md"
+          loading={isPending}
           onClick={() => console.log("clicked")}
           type="submit"
         />

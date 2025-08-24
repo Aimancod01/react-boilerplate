@@ -3,7 +3,7 @@ import axios from "axios";
 import { handleApiError } from "../components/errors/api-handler";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // e.g., http://localhost:3000/api
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
