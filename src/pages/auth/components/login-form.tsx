@@ -7,6 +7,7 @@ import { loginSchema, type TLoginSchema } from "../../../schemas";
 import { useAuthStore } from "../../../store/auth-store";
 import Button from "../../../components/ui/button";
 import { useLogin } from "../../../services/auth-service";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const { login } = useAuthStore();
@@ -17,6 +18,7 @@ const LoginForm = () => {
 
   const { mutate, isPending } = useLogin({
     onSuccess: (data) => {
+      toast.success("Registration successful!");
       login(data.payload.user);
       localStorage.setItem("token", data.payload.accessToken);
       navigate("/dashboard");
