@@ -1,23 +1,46 @@
 import AuthLayout from "../../../components/layouts/auth";
 import Input from "../../../components/ui/form/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signUpSchema, type TSignUpSchema } from "../../../schemas";
-import Select from "../../../components/ui/form/select";
 import Button from "../../../components/ui/button";
+import { useRegister } from "../../../services/auth-service";
+import Select from "../../../components/ui/form/select";
+import toast from "react-hot-toast";
 
 const SignUpForm = () => {
-  const { register, formState, handleSubmit } = useForm({
+  const navigate = useNavigate();
+  const { register, formState, handleSubmit, reset } = useForm({
     resolver: zodResolver(signUpSchema),
+  });
+
+  const { mutate, isPending } = useRegister({
+    onSuccess: () => {
+      toast.success("Registration successful!");
+      navigate("/login");
+      reset();
+    },
   });
 
   async function onSubmit(data: TSignUpSchema) {
     console.log(data);
+    mutate({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      role_id: 2, // Default role as 'User'
+    });
   }
   return (
     <AuthLayout>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <Input
+          type="text"
+          label="Name"
+          error={formState.errors["name"]}
+          registration={register("name")}
+        />
         <Input
           type="email"
           label="Email Address"
@@ -53,6 +76,7 @@ const SignUpForm = () => {
           variant="primary"
           className="w-full"
           size="md"
+          loading={isPending}
           onClick={() => console.log("clicked")}
           type="submit"
         />
